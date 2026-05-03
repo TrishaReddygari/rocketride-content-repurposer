@@ -1,0 +1,112 @@
+{
+	"components": [
+		{
+			"id": "chat_1",
+			"provider": "chat",
+			"config": { "hideForm": true, "mode": "Source", "parameters": {}, "type": "chat" },
+			"ui": { "position": { "x": 20, "y": 370 }, "measured": { "width": 150, "height": 66 }, "nodeType": "default", "formDataValid": true }
+		},
+
+		{
+			"id": "prompt_linkedin_1",
+			"provider": "prompt",
+			"config": {
+				"instructions": ["Rewrite the long-form post the user provides as a LinkedIn post.\n\nConstraints:\n- Under 1,300 characters total.\n- Open with a single punchy hook line. No 'In today's fast-paced world' fluff.\n- 2 to 4 short paragraphs, each focused on one specific insight from the source post.\n- Generous line breaks for mobile scannability.\n- End with a soft, specific question that invites a real comment. Avoid 'Thoughts?' / 'Agree?' clichés.\n- No hashtags.\n- Voice: confident, first-person, like a developer telling another developer something they actually learned.\n\nOutput ONLY the LinkedIn post text. No preamble, no labels."],
+				"parameters": {}
+			},
+			"input": [{ "lane": "questions", "from": "chat_1" }],
+			"ui": { "position": { "x": 260, "y": 100 }, "measured": { "width": 150, "height": 66 }, "nodeType": "default", "formDataValid": true }
+		},
+		{
+			"id": "prompt_twitter_1",
+			"provider": "prompt",
+			"config": {
+				"instructions": ["Rewrite the long-form post the user provides as a Twitter/X thread.\n\nConstraints:\n- 5 to 8 tweets total.\n- Each tweet must be 280 characters or fewer.\n- Number them: '1/', '2/', '3/', etc.\n- Tweet 1 is the hook — make someone stop scrolling.\n- Each subsequent tweet delivers one concrete idea, example, or takeaway from the source.\n- No hashtags.\n- Final tweet lands on a specific takeaway, not a generic 'follow me' CTA.\n- Voice: punchy, opinionated, first-person.\n\nOutput the tweets one per line, separated by a blank line. No preamble, no labels."],
+				"parameters": {}
+			},
+			"input": [{ "lane": "questions", "from": "chat_1" }],
+			"ui": { "position": { "x": 260, "y": 260 }, "measured": { "width": 150, "height": 66 }, "nodeType": "default", "formDataValid": true }
+		},
+		{
+			"id": "prompt_devto_1",
+			"provider": "prompt",
+			"config": {
+				"instructions": ["Rewrite the long-form post the user provides as a short dev.to article in markdown.\n\nUse this exact structure:\n\n# {specific, clickable title}\n\n> TL;DR: {2-sentence summary}\n\n{1 to 2 short paragraphs of context — what is this about and why a developer should care}\n\n## Key takeaways\n\n- **{takeaway 1}** — one sentence\n- **{takeaway 2}** — one sentence\n- **{takeaway 3}** — one sentence\n\n## Read the full version\n\n{One sentence prompting the reader to read the source post.}\n\nVoice: technical, warm, first-person, no marketing-speak. Output ONLY the markdown — no preamble, no labels."],
+				"parameters": {}
+			},
+			"input": [{ "lane": "questions", "from": "chat_1" }],
+			"ui": { "position": { "x": 260, "y": 420 }, "measured": { "width": 150, "height": 66 }, "nodeType": "default", "formDataValid": true }
+		},
+		{
+			"id": "prompt_instagram_1",
+			"provider": "prompt",
+			"config": {
+				"instructions": ["Rewrite the long-form post the user provides as an Instagram caption.\n\nConstraints:\n- Total length 800 to 1,500 characters.\n- Open with a single scroll-stopping line (the part visible before 'see more').\n- Generous line breaks between thoughts — Instagram captions are skimmed.\n- Inject one specific moment, detail, or quote from the source post — no generic platitudes.\n- Voice: warm, authentic, conversational — like sharing this with a friend, not broadcasting.\n- End with a question that genuinely invites comments.\n- After the caption text, leave ONE blank line, then add 5 to 10 relevant hashtags on a single line.\n- Light emoji use is OK; do not overdo it.\n\nOutput ONLY the caption + hashtags. No preamble, no labels."],
+				"parameters": {}
+			},
+			"input": [{ "lane": "questions", "from": "chat_1" }],
+			"ui": { "position": { "x": 260, "y": 580 }, "measured": { "width": 150, "height": 66 }, "nodeType": "default", "formDataValid": true }
+		},
+
+		{
+			"id": "llm_openai_linkedin_1",
+			"provider": "llm_openai",
+			"config": {
+				"profile": "openai-4o",
+				"openai-4o": { "apikey": "${ROCKETRIDE_OPENAI_KEY}" },
+				"parameters": {}
+			},
+			"input": [{ "lane": "questions", "from": "prompt_linkedin_1" }],
+			"ui": { "position": { "x": 500, "y": 100 }, "measured": { "width": 150, "height": 66 }, "nodeType": "default", "formDataValid": true }
+		},
+		{
+			"id": "llm_openai_twitter_1",
+			"provider": "llm_openai",
+			"config": {
+				"profile": "openai-4o",
+				"openai-4o": { "apikey": "${ROCKETRIDE_OPENAI_KEY}" },
+				"parameters": {}
+			},
+			"input": [{ "lane": "questions", "from": "prompt_twitter_1" }],
+			"ui": { "position": { "x": 500, "y": 260 }, "measured": { "width": 150, "height": 66 }, "nodeType": "default", "formDataValid": true }
+		},
+		{
+			"id": "llm_openai_devto_1",
+			"provider": "llm_openai",
+			"config": {
+				"profile": "openai-4o",
+				"openai-4o": { "apikey": "${ROCKETRIDE_OPENAI_KEY}" },
+				"parameters": {}
+			},
+			"input": [{ "lane": "questions", "from": "prompt_devto_1" }],
+			"ui": { "position": { "x": 500, "y": 420 }, "measured": { "width": 150, "height": 66 }, "nodeType": "default", "formDataValid": true }
+		},
+		{
+			"id": "llm_openai_instagram_1",
+			"provider": "llm_openai",
+			"config": {
+				"profile": "openai-4o",
+				"openai-4o": { "apikey": "${ROCKETRIDE_OPENAI_KEY}" },
+				"parameters": {}
+			},
+			"input": [{ "lane": "questions", "from": "prompt_instagram_1" }],
+			"ui": { "position": { "x": 500, "y": 580 }, "measured": { "width": 150, "height": 66 }, "nodeType": "default", "formDataValid": true }
+		},
+
+		{
+			"id": "response_answers_1",
+			"provider": "response_answers",
+			"config": { "laneName": "answers" },
+			"input": [
+				{ "lane": "answers", "from": "llm_openai_linkedin_1" },
+				{ "lane": "answers", "from": "llm_openai_twitter_1" },
+				{ "lane": "answers", "from": "llm_openai_devto_1" },
+				{ "lane": "answers", "from": "llm_openai_instagram_1" }
+			],
+			"ui": { "position": { "x": 740, "y": 370 }, "measured": { "width": 150, "height": 66 }, "nodeType": "default", "formDataValid": true }
+		}
+	],
+	"project_id": "aae9082d-2ad9-4a25-8c9e-536b05670d86",
+	"viewport": { "x": 0, "y": 0, "zoom": 1 },
+	"version": 1
+}

@@ -102,6 +102,21 @@ Order matches the input order in `response_answers_1` in the pipe file.
 
 ---
 
+## Example: input → outputs
+
+The repo ships a complete worked example so you can see the shape of the inputs and outputs without setting up the engine.
+
+- **Input**: [`examples/sample_blog_post.md`](examples/sample_blog_post.md) — a 600-word post titled *"I built an AI content repurposer with RocketRide in a weekend — here's what surprised me"*
+- **Outputs**: [`examples/sample_outputs/`](examples/sample_outputs/) — four illustrative platform variants generated from that input
+  - [LinkedIn post](examples/sample_outputs/linkedin.md)
+  - [X (Twitter) thread](examples/sample_outputs/x_thread.md)
+  - [dev.to article](examples/sample_outputs/devto.md)
+  - [Instagram caption](examples/sample_outputs/instagram.md)
+
+The sample outputs are illustrative — they show what the prompts in `content_repurposer.pipe` are tuned to produce. To regenerate them with the real GPT-4o calls, follow the Quick Start above.
+
+---
+
 ## Customizing
 
 ### Change the platforms

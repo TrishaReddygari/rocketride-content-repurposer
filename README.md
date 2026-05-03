@@ -26,14 +26,17 @@ chat (paste post) ──┤                                ├─→ response (4
                     └─→ prompt(Instagram) → GPT-4o ──┘
 ```
 
-Ten components in one `.pipe` file:
+Fourteen components in one `.pipe` file:
 
 | # | Component | Role |
 |---|---|---|
 | 1 | `chat_1` | Source — paste your blog post here |
-| 2–5 | `prompt_{linkedin,twitter,devto,instagram}_1` | Platform-specific instruction templates |
-| 6–9 | `llm_openai_{linkedin,twitter,devto,instagram}_1` | Four GPT-4o calls in parallel |
-| 10 | `response_answers_1` | Single response node, four inputs (per RocketRide's fan-out pattern) |
+| 2–5 | `agent_{linkedin,twitter,devto,instagram}_1` | Four `agent_rocketride` nodes with platform-specific system prompts that the LLM has to obey |
+| 6–9 | `llm_openai_{linkedin,twitter,devto,instagram}_1` | Four GPT-4o calls — one per agent (control-attached) |
+| 10–13 | `memory_internal_{linkedin,twitter,devto,instagram}_1` | One memory per agent (`agent_rocketride` requires it) |
+| 14 | `response_answers_1` | Single response node, four inputs (per RocketRide's fan-out pattern) |
+
+**Why agents and not `prompt` nodes?** An earlier v1 used `prompt` nodes — but in RocketRide the `prompt` node injects instructions as *context* (the LLM treats them as background, not rules). All four outputs came back as the same generic summary. Switching to `agent_rocketride` makes the instructions act as a real *system prompt* — the LLM is told "you are a LinkedIn rewriter, follow these hard rules" and obeys them. That gave us the platform-specific outputs in `examples/sample_outputs/`.
 
 The four LLM calls run in parallel — total latency is roughly one GPT-4o call, not four.
 

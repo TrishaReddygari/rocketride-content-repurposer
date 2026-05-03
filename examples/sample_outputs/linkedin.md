@@ -1,13 +1,9 @@
-I built an AI content repurposer in a weekend — without writing any orchestration code.
+Automating content repurposing was a game-changer.
 
-Every long-form writer hits the same wall: you publish 1,500 words, then have to retype the idea four different ways for LinkedIn, X, dev.to, and Instagram. Mechanical work, but it eats hours.
+I built an AI content repurposer using RocketRide in just a weekend. Instead of juggling multiple scripts and templates, I created a single pipeline that handles platform-specific rewrites in parallel. The simplicity of using a JSON file with no glue code was a revelation.
 
-Instead of a Python script with four LLM calls and brittle prompt templates, I built the whole thing as a single RocketRide pipeline. Ten components, one JSON file, parallel platform-specific rewrites, no glue code.
+RocketRide's `.pipe` JSON format struck the perfect balance between visual and code-based workflows. I could handwrite my pipeline while still benefiting from a visual canvas for documentation. This flexibility made version control seamless and intuitive.
 
-What surprised me most wasn't the speed — it was the lane-typing system. Components in RocketRide connect via typed lanes (text, questions, answers, documents). You literally cannot wire the wrong output to the wrong input. Mistakes that would normally show up two hours into debugging show up at validation time.
+The lane-typing system was another standout feature. It prevented common errors by ensuring components connected correctly, saving me from debugging headaches. This type-safety approach made pipeline assembly feel like a robust function-composition language.
 
-The deeper bet I'm making: small, single-purpose, version-controlled pipelines are how AI ends up in real production work. Not one giant agent doing everything. The repurposer is exactly that — one specific job, ten components, lives in a `.pipe` file in my repo.
-
-The full pipe is on GitHub if you want to copy or fork it. Swap the LLM, add a fifth platform, point it at your own CMS — it's all one-node changes.
-
-What's the most repetitive piece of your content workflow right now?
+I'm excited to expand this tool by integrating it with a CMS for automatic content repurposing. How do you handle content repurposing in your projects?
